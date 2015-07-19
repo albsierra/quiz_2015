@@ -8,6 +8,11 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
 
+/* GET créditos. */
+router.get('/author', function(req, res) {
+  res.render('author', { author: 'Alberto Sierra Olmo' });
+});
+
 router.get('/quizes/question', quizController.question);
 router.get('/quizes/answer', quizController.answer);
 
