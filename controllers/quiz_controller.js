@@ -14,7 +14,12 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req,res) {
-	models.Quiz.findAll().then(
+	var filtro = '';
+	if(req.query.search) {
+		filtro = (req.query.search || '').replace(/ /g, "%");
+	}
+
+	models.Quiz.findAll({where:["pregunta like ?", '%'+filtro+'%'],order:'pregunta ASC'}).then(
 		function(quizes) {
 			res.render('quizes/index', {quizes: quizes});
 		}
