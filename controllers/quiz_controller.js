@@ -13,7 +13,7 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
-exports.index = function(req,res) {
+exports.index = function(req,res,next) {
 	var filtro = '';
 	if(req.query.search) {
 		filtro = (req.query.search || '').replace(/ /g, "%");
