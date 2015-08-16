@@ -49,7 +49,7 @@ app.use(function(req, res, next) {
         }
 
         var thisTime = (new Date()).getTime();
-        if((thisTime - req.session.lastTime) > 15000){
+        if((thisTime - req.session.lastTime) > 120000){
             delete req.session.user;
         }
         
