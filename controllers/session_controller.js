@@ -7,6 +7,19 @@ exports.loginRequired = function(req, res, next){
 	}
 };
 
+exports.checkSession = function(req,res,next){
+var now = Date.now();
+
+	if(req.session.user){
+		lastTime = new Date(req.session.lastTime);
+		if((now - lastTime) > 15000){
+			res.redirect('/logout');
+		}else{
+			next();
+		}
+	}
+}; 
+
 // GET /login  -- Formulario de login
 exports.new = function(req,res) {
 	var errors = req.session.errors || {};

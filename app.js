@@ -31,7 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Helpers dinámicos:
 app.use(function(req, res, next) {
-      // si no existe lo inicializa
+ 
+    // si no existe lo inicializa
     if (!req.session.redir) {
         req.session.redir = '/';
     }
@@ -41,7 +42,21 @@ app.use(function(req, res, next) {
         req.session.redir = req.path;
     }
 
-    // Hacer visible req.session en las vistas
+    if(req.session.user){
+        // si no existe lo inicializa
+        if (!req.session.lastTime) {
+            req.session.lastTime = (new Date()).getTime();
+        }
+
+        var thisTime = (new Date()).getTime();
+        if((thisTime - req.session.lastTime) > 15000){
+            delete req.session.user;
+        }
+        
+    }
+    
+    req.session.lastTime = Date.now();    // Hacer visible req.session en las vistas
+
     res.locals.session = req.session;
     next();
 });
